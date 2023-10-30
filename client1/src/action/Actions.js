@@ -5,6 +5,7 @@ export const ADD_POSTING = "ADD_POSTING";
 export const PROFILE = "PROFILE";
 export const LOGIN = "LOGIN";
 export const REGISTER = "REGISTER";
+export const SEARCH = "SEARCH";
 
 export const getPosting = () => {
   console.log("2. Masuk action");
@@ -213,6 +214,53 @@ export const RegisterUsers = (data) => {
             loading: false,
             data: false,
             errorMessage: "asfs",
+          },
+        });
+      });
+  };
+};
+
+export const searching = (caption, auth) => {
+  // console.log("2. Masuk action");
+  return (dispatch) => {
+    //loading
+    dispatch({
+      type: SEARCH,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
+    });
+
+    //get API
+    axios({
+      method: "GET",
+      url: "http://localhost:3000/posting/search/" + caption,
+      headers: { Authorization: auth },
+      timeout: 120000,
+    })
+      .then((response) => {
+        // console.log("3. Berhasil dapat data : ", response);
+        //berhasil get API
+        dispatch({
+          type: SEARCH,
+          payload: {
+            loading: false,
+            data: response.data,
+            errorMessage: false,
+          },
+        });
+      })
+      .catch((error) => {
+        // console.log("3. Gagal dapat data : ", error);
+        //gagal get API
+        dispatch({
+          type: SEARCH,
+          payload: {
+            loading: false,
+            data: false,
+            errorMessage: error.message,
           },
         });
       });
