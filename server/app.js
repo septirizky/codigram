@@ -3,11 +3,14 @@ const express = require("express");
 const cors = require("cors");
 const route = require("./routes");
 const AuthMiddlewares = require("./middlewares/AuthMiddlewares");
+
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 7200;
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
 app.use(AuthMiddlewares);
 app.use(route);
 app.listen(port, () => {
