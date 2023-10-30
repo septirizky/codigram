@@ -1,24 +1,15 @@
 import logo from "../logo.svg";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { MdContactMail, MdOutlineContactMail } from "react-icons/md";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { SlLogin, SlLogout } from "react-icons/sl";
-import { BsPerson } from "react-icons/bs";
+import { SlLogout } from "react-icons/sl";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { RiAddBoxFill, RiAddBoxLine } from "react-icons/ri";
-import Swal from "sweetalert2";
-import { RegisterUsers } from "../action/Actions";
 import { useEffect } from "react";
 
 export const Sidebar = () => {
   const pathname = useLocation();
   const navigate = useNavigate();
-
-  const getDataSession = () => {
-    const keyString = sessionStorage.getItem("userdata");
-    return JSON.parse(keyString);
-  };
-  const data = getDataSession() ? getDataSession() : false;
+  
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -99,61 +90,26 @@ export const Sidebar = () => {
                 </div>
               </button>
             </Link>
-            {/* {data ? (
-              <div className="dropdown">
-                <button
-                  id="dropdownMenuButton1"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  className="w-100 btn btn-light p-2 mb-1"
-                >
-                  <div className="row w-100">
-                    <div className="col-sm-2 m-0 p-0">
-                      {pathname.pathname === "/profile" ? (
-                        <img
-                          src={
-                            data
-                              ? data.data.image
-                              : "https://via.placeholder.com/100"
-                          }
-                          style={{ width: 30, height: 30 }}
-                          className="rounded-circle ms-3 border border-2 border-black"
-                          alt=""
-                        />
-                      ) : (
-                        <img
-                          src={
-                            data
-                              ? data.data.image
-                              : "https://via.placeholder.com/100"
-                          }
-                          style={{ width: 30, height: 30 }}
-                          className="rounded-circle ms-3"
-                          alt=""
-                        />
-                      )}
-                    </div>
-                    <div
-                      className={`col-sm-10 text-start fs-5 ${
-                        pathname.pathname === "/profile" ? "fw-bold" : ""
-                      }`}
-                    >
-                      {data ? data.data.username : "Name"}
-                    </div>
+            <Link to="search">
+              <button className="w-100 btn btn-light p-2 mb-1">
+                <div className="row w-100">
+                  <div className="col-sm-2 m-0 p-0">
+                    {pathname.pathname === "search" ? (
+                      <MdContactMail size={30} className="ms-3" />
+                    ) : (
+                      <MdOutlineContactMail size={30} className="ms-3" />
+                    )}
                   </div>
-                </button>
-                <ul className="dropdown-menu shadow" style={{ width: "300px" }}>
-                  <li>
-                    <Link to="/profile" className="dropdown-item">
-                      <BsPerson /> Info Account
-                    </Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider"></hr>
-                  </li>
-                </ul>
-              </div>
-            ) : ( */}
+                  <div
+                    className={`col-sm-10 text-start fs-5 ${
+                      pathname.pathname === "search" ? "fw-bold" : ""
+                    }`}
+                  >
+                    Search
+                  </div>
+                </div>
+              </button>
+            </Link>
             <Link to="logout">
               <button className="w-100 btn btn-light p-2 mb-1">
                 <div className="row w-100">
@@ -164,7 +120,6 @@ export const Sidebar = () => {
                 </div>
               </button>
             </Link>
-            {/* )} */}
           </div>
         </div>
         <div className="col-sm-10 border overflow-auto vh-100">
