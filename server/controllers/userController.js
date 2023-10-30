@@ -52,7 +52,7 @@ class UserController {
         const token = sign({ data }, process.env.SECRET_KEY);
         (await compareSync(password, data.password))
           ? res.status(200).json({ data: data, token: token })
-          : res.status(400).json({ message: "Incorrect Password." });
+          : res.status(401).json({ message: "Incorrect Password." });
       } else {
         res.status(400).json({ message: "Username not found." });
       }
