@@ -10,6 +10,7 @@ import { Sidebar } from "./components/sidebar";
 import Login from "./components/log";
 import Logout from "./components/logout";
 import Profile from "./components/Profil";
+import Search from "./components/search";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             ></Route>
             <Route path="/dashboard/logout" element={<Logout />}></Route>
             <Route path="/dashboard/profile" element={<Profile />}></Route>
+            <Route path="/dashboard/search" element={<Search />}></Route>
           </Route>
         </Routes>
       </Router>
