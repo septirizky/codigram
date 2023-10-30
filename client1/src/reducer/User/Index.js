@@ -1,4 +1,11 @@
-import { GET_POSTING, ADD_POSTING, PROFILE, LOGIN, REGISTER } from "../../action/Actions";
+import {
+  GET_POSTING,
+  ADD_POSTING,
+  PROFILE,
+  LOGIN,
+  REGISTER,
+  SEARCH,
+} from "../../action/Actions";
 
 const initialState = {
   getListPostingResult: false,
@@ -20,6 +27,10 @@ const initialState = {
   registerUsersResult: false,
   registerUsersLoading: false,
   registerUsersError: false,
+
+  searchingResult: false,
+  searchingLoading: false,
+  searchingError: false,
 };
 
 const list = (state = initialState, action) => {
@@ -63,6 +74,14 @@ const list = (state = initialState, action) => {
         registerUsersResult: action.payload.data,
         registerUsersLoading: action.payload.loading,
         registerUsersError: action.payload.errorMessage,
+      };
+
+      case SEARCH:
+      return {
+        ...state,
+        searchingResult: action.payload.data,
+        searchingLoading: action.payload.loading,
+        searchingError: action.payload.errorMessage,
       };
     default:
       return state;
