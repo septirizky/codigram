@@ -1,4 +1,5 @@
 const { Posting } = require("../models");
+const { Op } = require("sequelize");
 
 class PostingController {
   static async getPosting(req, res) {
@@ -10,16 +11,21 @@ class PostingController {
       res.status(500).json(error);
     }
   }
-  static async detailPosting (req, res, next){
+  static async detailPosting(req, res, next) {
     try {
-        const result = await Article.findAll({where: {id: req.params.id}, include: [Users]})
-        result ?
-            res.status(200).json(result) :
-            res.status(400).json({message: `Article ID ${req.params.id} not found.`})
+      const result = await Article.findAll({
+        where: { id: req.params.id },
+        include: [Users],
+      });
+      result
+        ? res.status(200).json(result)
+        : res
+            .status(400)
+            .json({ message: `Article ID ${req.params.id} not found.` });
     } catch (e) {
-        res.status(400).json(e)
+      res.status(400).json(e);
     }
-}
+  }
   static async createPosting(req, res) {
     try {
       const { caption, UserId } = req.body;
@@ -78,6 +84,22 @@ class PostingController {
         : res.status(400).json({
             message: `Id ${id} has not been deleted.`,
           });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+
+  static async searching(req, res) {
+    try {
+      const keyword = req.params.keyword;
+
+      let result = await Posting.findAll({
+        where: { caption: { [Op.iLike]: `%${keyword}%` } },
+      });
+
+      res.status(200).json({
+        data: result,
+      });
     } catch (err) {
       res.status(500).json(err);
     }
